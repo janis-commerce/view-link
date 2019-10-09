@@ -18,7 +18,7 @@ This package will obtain the stage name of your MS using the ENV variable **`JAN
 `view-link` uses a settings JSON config file.  
 It's located in `/path/to/root/MS_PATH/config/.janiscommercerc.json`  
   
-Requires the following fields:  
+Requires an field `view-link [Object]` with the following items:  
 - **hosts `[Object]`**: The hosts by stage
 
 #### Example
@@ -38,7 +38,7 @@ Requires the following fields:
 
 ## API
 
-### `getBrowse(service, entity, params)`
+### **`getBrowse(service, entity, params)`**
 
 Generates the JANIS views Browse URL from the specified parameters  
 Requires an `service [String]` and `entity [String]`  
@@ -53,7 +53,7 @@ ViewLink.getBrowse('some-service', 'some-entity',{
 // https://app.janis.in/some-service/some-entity/browse?sortBy=something
 ```
 
-### `getEdit(service, entity, entityId, params)`
+### **`getEdit(service, entity, entityId, params)`**
 
 Generates the JANIS views Edit URL from the specified parameters  
 Requires an `service [String]`, `entity [String]` and `entityId [String]`  
@@ -68,7 +68,7 @@ ViewLink.getEdit('some-service', 'some-entity', 'some-id',{
 // https://app.janis.in/some-service/some-entity/edit/some-id?foo=bar
 ```
 
-### `get(entries, params)`
+### **`get(entries, params)`**
 
 Generates a custom JANIS views URL from the specified parameters  
 Requires `entries [Array]`  

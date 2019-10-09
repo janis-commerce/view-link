@@ -56,6 +56,7 @@ describe('ViewLink', () => {
 			assert.deepStrictEqual(ViewLink.config, fakeConfig);
 
 			settingsMock.verify();
+			sandbox.assert.calledOnce(settingsMock);
 		});
 
 		it('should not call _setHost() when the host was already loaded', () => {

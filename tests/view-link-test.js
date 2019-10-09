@@ -58,10 +58,10 @@ describe('ViewLink', () => {
 			settingsMock.verify();
 		});
 
-		it('should not call _getHost() when the host was already loaded', () => {
+		it('should not call _setHost() when the host was already loaded', () => {
 
 			const settingsMock = mockSettings(fakeConfig);
-			const getHostSpy = sandbox.spy(ViewLink, '_getHost');
+			const getHostSpy = sandbox.spy(ViewLink, '_setHost');
 
 			assert.deepStrictEqual(ViewLink.host, 'http://localhost:8080');
 			assert.deepStrictEqual(ViewLink.host, 'http://localhost:8080');
@@ -83,19 +83,16 @@ describe('ViewLink', () => {
 
 			].forEach(method => {
 
-				describe(method, () => {
+				it(`${method} should throw`, () => {
 
-					it('should throw', () => {
+					const settingsMock = mockSettings();
 
-						const settingsMock = mockSettings();
-
-						assert.throws(() => ViewLink[method](), {
-							name: 'ViewLinkError',
-							code: ViewLinkError.codes.CONFIG_NOT_FOUND
-						});
-
-						settingsMock.verify();
+					assert.throws(() => ViewLink[method](), {
+						name: 'ViewLinkError',
+						code: ViewLinkError.codes.CONFIG_NOT_FOUND
 					});
+
+					settingsMock.verify();
 				});
 			});
 		});
@@ -109,11 +106,35 @@ describe('ViewLink', () => {
 
 			].forEach(method => {
 
-				describe(method, () => {
+				it(`${method} should throw if the config.hosts not exists`, () => {
 
-					it('should throw if the config.hosts not exists', () => {
+					const settingsMock = mockSettings({});
 
-						const settingsMock = mockSettings({});
+					assert.throws(() => ViewLink[method](), {
+						name: 'ViewLinkError',
+						code: ViewLinkError.codes.INVALID_HOSTS_IN_CONFIG
+					});
+
+					settingsMock.verify();
+				});
+
+				[1, 'string', ['array']].forEach(setting => {
+
+					it(`${method} should throw if the config isn't an object or is an array`, () => {
+
+						const settingsMock = mockSettings(setting);
+
+						assert.throws(() => ViewLink[method](), {
+							name: 'ViewLinkError',
+							code: ViewLinkError.codes.INVALID_CONFIG
+						});
+
+						settingsMock.verify();
+					});
+
+					it(`${method} should throw if the config.hosts is an object or is an array`, () => {
+
+						const settingsMock = mockSettings({ hosts: setting });
 
 						assert.throws(() => ViewLink[method](), {
 							name: 'ViewLinkError',
@@ -121,21 +142,6 @@ describe('ViewLink', () => {
 						});
 
 						settingsMock.verify();
-					});
-
-					[null, 1, 'string', ['array']].forEach(setting => {
-
-						it('should throw if the config.hosts is an object or is an array', () => {
-
-							const settingsMock = mockSettings({ hosts: setting });
-
-							assert.throws(() => ViewLink[method](), {
-								name: 'ViewLinkError',
-								code: ViewLinkError.codes.INVALID_HOSTS_IN_CONFIG
-							});
-
-							settingsMock.verify();
-						});
 					});
 				});
 			});
@@ -150,33 +156,30 @@ describe('ViewLink', () => {
 
 		].forEach(method => {
 
-			describe(method, () => {
+			it(`${method} should throw if the stage ENV variable not exists`, () => {
 
-				it('should throw if the stage ENV variable not exists', () => {
+				restoreStage();
 
-					restoreStage();
+				assert.throws(() => ViewLink[method](), {
+					name: 'ViewLinkError',
+					code: ViewLinkError.codes.NO_STAGE_NAME
+				});
+			});
 
-					assert.throws(() => ViewLink[method](), {
-						name: 'ViewLinkError',
-						code: ViewLinkError.codes.NO_STAGE_NAME
-					});
+			it(`${method} should throw if the host not exists in config`, () => {
+
+				const settingsMock = mockSettings({
+					hosts: {
+						sarasa: ''
+					}
 				});
 
-				it('should throw if the host not exists in config', () => {
-
-					const settingsMock = mockSettings({
-						hosts: {
-							sarasa: ''
-						}
-					});
-
-					assert.throws(() => ViewLink[method](), {
-						name: 'ViewLinkError',
-						code: ViewLinkError.codes.HOST_NOT_FOUND
-					});
-
-					settingsMock.verify();
+				assert.throws(() => ViewLink[method](), {
+					name: 'ViewLinkError',
+					code: ViewLinkError.codes.HOST_NOT_FOUND
 				});
+
+				settingsMock.verify();
 			});
 		});
 	});
@@ -195,29 +198,26 @@ describe('ViewLink', () => {
 
 		].forEach(method => {
 
-			describe(method, () => {
+			[undefined, null, 1, ['array']].forEach(value => {
 
-				[undefined, null, 1, ['array']].forEach(value => {
+				it(`${method} should throw if the received service is invalid`, () => {
 
-					it('should throw if the received service is invalid', () => {
-
-						assert.throws(() => ViewLink[method](value), {
-							name: 'ViewLinkError',
-							code: ViewLinkError.codes.INVALID_SERVICE
-						});
-
-						settingsMock.verify();
+					assert.throws(() => ViewLink[method](value), {
+						name: 'ViewLinkError',
+						code: ViewLinkError.codes.INVALID_SERVICE
 					});
 
-					it('should throw if the received entity is invalid', () => {
+					settingsMock.verify();
+				});
 
-						assert.throws(() => ViewLink[method]('some-service', value), {
-							name: 'ViewLinkError',
-							code: ViewLinkError.codes.INVALID_ENTITY
-						});
+				it(`${method} should throw if the received entity is invalid`, () => {
 
-						settingsMock.verify();
+					assert.throws(() => ViewLink[method]('some-service', value), {
+						name: 'ViewLinkError',
+						code: ViewLinkError.codes.INVALID_ENTITY
 					});
+
+					settingsMock.verify();
 				});
 			});
 		});

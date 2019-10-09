@@ -16,7 +16,7 @@ npm install @janiscommerce/view-link
 This package will obtain the stage name of your MS using the ENV variable **`JANIS_ENV`**
 
 `view-link` uses a settings JSON config file.  
-It's located in `/path/to/root/MS_PATH/config/.janiscommercerc.json`  
+It's located in `/path/to/root/[MS_PATH]/config/.janiscommercerc.json`  
   
 Requires an field `view-link [Object]` with the following items:  
 - **hosts `[Object]`**: The hosts by stage

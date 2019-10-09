@@ -42,7 +42,8 @@ Requires an field `view-link [Object]` with the following items:
 
 Generates the JANIS views Browse URL from the specified parameters  
 Requires an `service [String]` and `entity [String]`  
-Optionally you can add `params [Object]` that will be converted into `query-strings`
+Optionally you can add `params [Object]` that will be converted into `query-strings`  
+Returns a `[String]` with the built JANIS view URL  
 
 #### Example
 ```js
@@ -57,7 +58,8 @@ ViewLink.getBrowse('some-service', 'some-entity',{
 
 Generates the JANIS views Edit URL from the specified parameters  
 Requires an `service [String]`, `entity [String]` and `entityId [String]`  
-Optionally you can add `params [Object]` that will be converted into `query-strings`
+Optionally you can add `params [Object]` that will be converted into `query-strings`  
+Returns a `[String]` with the built JANIS view URL  
 
 #### Example
 ```js
@@ -72,7 +74,8 @@ ViewLink.getEdit('some-service', 'some-entity', 'some-id',{
 
 Generates a custom JANIS views URL from the specified parameters  
 Requires `entries [Array]`  
-Optionally you can add `params [Object]` that will be converted into `query-strings`
+Optionally you can add `params [Object]` that will be converted into `query-strings`  
+Returns a `[String]` with the built JANIS view URL  
 
 #### Example
 ```js

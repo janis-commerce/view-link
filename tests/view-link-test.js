@@ -371,9 +371,32 @@ describe('ViewLink', () => {
 
 		it('should return the url with query strings when exists in the params', () => {
 
+			const params = {
+				arrayParam: ['value1', 'value2'],
+				nestedObjectParam: { subprop: { some: 'data' } }
+			};
+
 			assert.deepStrictEqual(
-				ViewLink.getBrowse('some-service', 'some-entity', { foo: 'bar' }),
-				'http://localhost:8080/some-service/some-entity/browse?foo=bar'
+				ViewLink.getBrowse('some-service', 'some-entity', params),
+				'http://localhost:8080/some-service/some-entity/browse?arrayParam%5B0%5D=value1&arrayParam%5B1%5D=value2&nestedObjectParam%5Bsubprop%5D%5Bsome%5D=data' // eslint-disable-line max-len
+			);
+
+			settingsMock.verify();
+		});
+
+		it('should return the url with filters when they are sent in the params', async () => {
+
+			const params = {
+				sortBy: 'someField',
+				filters: {
+					someField: 'someValue',
+					anotherField: ['anotherValue', 'anotherValue2']
+				}
+			};
+
+			assert.deepStrictEqual(
+				ViewLink.getBrowse('some-service', 'some-entity', params),
+				'http://localhost:8080/some-service/some-entity/browse?sortBy=someField&filters%5BsomeField%5D=someValue&filters%5BanotherField%5D%5B0%5D=anotherValue&filters%5BanotherField%5D%5B1%5D=anotherValue2' // eslint-disable-line max-len
 			);
 
 			settingsMock.verify();

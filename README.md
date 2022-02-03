@@ -1,9 +1,10 @@
 # view-link
 
-[![Build Status](https://travis-ci.org/janis-commerce/view-link.svg?branch=master)](https://travis-ci.org/janis-commerce/view-link)
+![Build Status](https://github.com/janis-commerce/view-link/workflows/Build%20Status/badge.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/janis-commerce/view-link/badge.svg?branch=master)](https://coveralls.io/github/janis-commerce/view-link?branch=master)
+[![npm version](https://badge.fury.io/js/%40janiscommerce%2Fview-link.svg)](https://www.npmjs.com/package/@janiscommerce/view-link)
 
-A package for creating JANIS views links
+A package for creating Janis views links
 
 ## Installation
 ```sh
@@ -15,10 +16,10 @@ npm install @janiscommerce/view-link
 #### ENV Variables
 This package will obtain the stage name of your MS using the ENV variable **`JANIS_ENV`**
 
-`view-link` uses a settings JSON config file.  
-It's located in `/path/to/root/[MS_PATH]/config/.janiscommercerc.json`  
-  
-Requires an field `view-link [Object]` with the following items:  
+`view-link` uses a settings JSON config file.
+It's located in `/path/to/root/[MS_PATH]/config/.janiscommercerc.json`
+
+Requires an field `view-link [Object]` with the following items:
 - **hosts `[Object]`**: The hosts by stage
 
 #### Example
@@ -43,10 +44,10 @@ Requires an field `view-link [Object]` with the following items:
 > #### :star: New
 > Now browse **filters** are supported in `params` :sunglasses:
 
-Generates the JANIS views Browse URL from the specified parameters  
-Requires an `service [String]` and `entity [String]`  
-Optionally you can add `params [Object]` that will be converted into `query-strings`  
-Returns a `[String]` with the built JANIS view URL  
+Generates the JANIS views Browse URL from the specified parameters
+Requires an `service [String]` and `entity [String]`
+Optionally you can add `params [Object]` that will be converted into `query-strings`
+Returns a `[String]` with the built JANIS view URL
 
 #### Example
 ```js
@@ -61,7 +62,7 @@ ViewLink.getBrowse('some-service', 'some-entity',{
 ```js
 ViewLink.getBrowse('some-service', 'some-entity',{
 	sortBy: 'something',
-	fitlers: {
+	filters: {
 		color: 'red',
 		status: 'active'
 	}
@@ -72,10 +73,10 @@ ViewLink.getBrowse('some-service', 'some-entity',{
 
 ### **`getEdit(service, entity, entityId, params)`**
 
-Generates the JANIS views Edit URL from the specified parameters  
-Requires an `service [String]`, `entity [String]` and `entityId [String]`  
-Optionally you can add `params [Object]` that will be converted into `query-strings`  
-Returns a `[String]` with the built JANIS view URL  
+Generates the JANIS views Edit URL from the specified parameters
+Requires an `service [String]`, `entity [String]` and `entityId [String]`
+Optionally you can add `params [Object]` that will be converted into `query-strings`
+Returns a `[String]` with the built JANIS view URL
 
 #### Example
 ```js
@@ -88,10 +89,10 @@ ViewLink.getEdit('some-service', 'some-entity', 'some-id',{
 
 ### **`get(entries, params)`**
 
-Generates a custom JANIS views URL from the specified parameters  
-Requires `entries [Array]`  
-Optionally you can add `params [Object]` that will be converted into `query-strings`  
-Returns a `[String]` with the built JANIS view URL  
+Generates a custom JANIS views URL from the specified parameters
+Requires `entries [Array]`
+Optionally you can add `params [Object]` that will be converted into `query-strings`
+Returns a `[String]` with the built JANIS view URL
 
 #### Example
 ```js

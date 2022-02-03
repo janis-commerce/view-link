@@ -1,7 +1,7 @@
 'use strict';
 
 const assert = require('assert');
-const sandbox = require('sinon').createSandbox();
+const sinon = require('sinon');
 const Settings = require('@janiscommerce/settings');
 
 const ViewLink = require('./../lib/view-link');
@@ -24,7 +24,7 @@ const restoreStage = () => {
 	delete process.env.JANIS_ENV;
 };
 
-const mockSettings = returns => sandbox.mock(Settings)
+const mockSettings = returns => sinon.mock(Settings)
 	.expects('get')
 	.withArgs('view-link')
 	.returns(returns);
@@ -41,7 +41,7 @@ describe('ViewLink', () => {
 	});
 
 	afterEach(() => {
-		sandbox.restore();
+		sinon.restore();
 		restoreStage();
 		clearConfigCaches();
 	});
@@ -56,19 +56,19 @@ describe('ViewLink', () => {
 			assert.deepStrictEqual(ViewLink.config, fakeConfig);
 
 			settingsMock.verify();
-			sandbox.assert.calledOnce(settingsMock);
+			sinon.assert.calledOnce(settingsMock);
 		});
 
 		it('should not call _setHost() when the host was already loaded', () => {
 
 			const settingsMock = mockSettings(fakeConfig);
-			const getHostSpy = sandbox.spy(ViewLink, '_setHost');
+			const getHostSpy = sinon.spy(ViewLink, '_setHost');
 
 			assert.deepStrictEqual(ViewLink.host, 'http://localhost:8080');
 			assert.deepStrictEqual(ViewLink.host, 'http://localhost:8080');
 
 			settingsMock.verify();
-			sandbox.assert.calledOnce(getHostSpy);
+			sinon.assert.calledOnce(getHostSpy);
 		});
 
 	});

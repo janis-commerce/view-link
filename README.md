@@ -40,6 +40,9 @@ Requires an field `view-link [Object]` with the following items:
 
 ### **`getBrowse(service, entity, params)`**
 
+> #### :star: New
+> Now browse **filters** are supported in `params` :sunglasses:
+
 Generates the JANIS views Browse URL from the specified parameters  
 Requires an `service [String]` and `entity [String]`  
 Optionally you can add `params [Object]` that will be converted into `query-strings`  
@@ -52,6 +55,19 @@ ViewLink.getBrowse('some-service', 'some-entity',{
 });
 
 // https://app.janis.in/some-service/some-entity/browse?sortBy=something
+```
+
+#### Example with filters
+```js
+ViewLink.getBrowse('some-service', 'some-entity',{
+	sortBy: 'something',
+	fitlers: {
+		color: 'red',
+		status: 'active'
+	}
+});
+
+// https://app.janis.in/some-service/some-entity/browse?sortBy=something&filters[color]=red&filters[status]=active
 ```
 
 ### **`getEdit(service, entity, entityId, params)`**

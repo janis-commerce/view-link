@@ -16,14 +16,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js 14.x
-        uses: actions/setup-node@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
         with:
-          node-version: 14.x
+          node-version: 12.x
       - name: Install dependencies
         run: npm install
       - name: Run coverage
-        run: npm run test:ci
+        run: npm run coverage-ci
       - name: Upload to Coveralls
         uses: coverallsapp/github-action@master
         with:

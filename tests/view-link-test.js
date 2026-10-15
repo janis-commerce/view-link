@@ -4,8 +4,8 @@ const assert = require('assert');
 const sinon = require('sinon');
 const Settings = require('@janiscommerce/settings');
 
-const ViewLink = require('./../lib/view-link');
-const ViewLinkError = require('./../lib/view-link-error');
+const ViewLink = require('../lib/view-link');
+const ViewLinkError = require('../lib/view-link-error');
 
 const fakeConfig = {
 	hosts: {
